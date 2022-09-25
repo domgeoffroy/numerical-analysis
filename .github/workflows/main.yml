@@ -1,0 +1,17 @@
+image: asciidoctor/docker-asciidoctor
+pages:
+    stage: deploy
+    script:
+        - asciidoctor -o Classes/index.html -D public rdg.adoc
+        - mkdir public
+        - cp -r images public/images
+        - mkdir public/Classes
+        - mkdir public/Classes/Class01
+        - asciidoctor -D public/Classes/ Classes/*.adoc
+        - asciidoctor -D public/Classes/Class01 Classes/Class01/*.adoc
+    only:
+        - master
+    artifacts:
+        name: "documentation-html"
+        paths:
+            - public/
