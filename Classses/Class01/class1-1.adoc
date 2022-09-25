@@ -1,0 +1,141 @@
+:stem: latexmath
+= Introduction
+
+This class is about solving differential equations using numerical methods. Two types will be considered :
+
+* ODE which are Ordinary Differential Equations
+* PDE which refers to Partial Differential Equations
+
+Differents methods are employed, depending on the the type or the subtype of the equations to solve. For now, we'll focus on ODEs but we'll have a a look at PDEs a bit later.
+
+== ODES : what are they
+
+So-called ordinary differential equations refer to a set of equations which can be written as :
+
+[stem] 
+++++ 
+Y'(t) = f(t,Y(t))
+++++
+
+It may seem a bit surprising to try to find the solution of this problem since stem:[Y] is simulatenously the unknown variable and an input of function stem:[f(t, Y(t))]. Yet, physics has taught us it is possible!
+
+The previous example is a so-called first-order ODE since the highest order derivative is the first one. A second-order ODE example would be : 
+
+[stem] 
+++++ 
+Y''(t) = f(t,Y(t), Y'(t))
+++++
+
+As one may notice, the 2nd-order ODE allows a new input, the first order derivative. Hence, all the lower order derivatives are allowed.
+
+
+== ODES : for what?
+
+Many of you may have a look at ODES using a purely academic point of view : it's a Math problem, which is sufficient in itself. Yet, these equations are very frequent in modeling complex phenomena in physics, chemistry, finance, etc! A very known application of ODES is simply Newton's equation which reads :
+
+[stem] 
+++++ 
+\sum{\vec{F}} = m \vec{ \ddot{x}}(t)
+++++
+
+Where stem:[\vec{F}] stands for the acting forces on a particle and stem:[\vec{x}] the position of that same particle. Here, stem:[\vec{\ddot{x}}] refers to the 2nd-derivation of the position with respect to time, variable stem:[t].
+
+The previous example refers to physics, but all fields in engineering are filled with models using such equations.
+
+== ODES : But we know how to solve them!
+
+Yes and No.
+
+Actually most of you probably already went through quite a few classes dedicated to solving such equations. For instance, let's have a look at this equatoin :
+
+[stem] 
+++++ 
+Y'(t) = t^2
+++++
+
+This equation can be solved using classical integration techniques which imply that :
+
+[stem] 
+++++ 
+Y(t)= \int{ Y'(t) dt} = \int{ t^2 dt} = \frac{t^3}{3} + C
+++++
+
+Where stem:[C] is a constant that has to be determined using a so-called initial value. This constant is a topic which will be discussed later. 
+
+Thus, one may legitimately asks himself why one would like to use numerical methods in order to solve a problem for which we already have a solution. There are quite a few good reasons, but two of them stand out.
+
+=== Reason 1 : some equations do not have analytical solutions
+
+The previous example could be solve because one uncounsciously went through a complicated task : integrating a function. Indeed, the solution was determined because it well-known that 
+
+[stem] 
+++++ 
+\int{ t^2 dt} = \frac{t^3}{3} + C
+++++
+
+Yet, it takes for granted that the so-called premitive of a function is known. In this specific case, function stem:[{t^2}] is easy to integrate since everyone is well aware that its primitive is stem:[\frac{t^3}{3}]. But if we look at a slightly more complicated equation, it isn't always straightforward. For instance :
+
+[stem] 
+++++ 
+Y'(t) = \frac{\sin{Y'(t)}}{ e^{Y(t) } e^{t}  }
+++++
+
+As a matter of fact, there are ODEs for which it can be shown that :
+
+* Premitives do not exist and as a conquence they cannot be written down. Hence, describing the solution is slighty complicated for the least
+* The existence of the solution can still be proven
+
+=== Reason 2 : Convenience
+
+Although somtimes it is possible or even straighforward to find a solution to an ODE, numerical solutions are often easier to use since they are usually compatible with most problems and are easy to use once developed. Moreover, if the ODEs are part of a greater model, it is just easier to automatize the whole process than to compute all the integrals manually, using the previously mentioned primitives.
+
+== ODES : What is needed in order to solve them
+
+The requirements to solve them numerically are the same as if wanted to solve them analytically. For instance, let's have a look at previously presented ODE :
+
+[stem] 
+++++ 
+Y'(t) = t^2
+++++
+
+This equation in itself cannot be solve as there is no initial value. Indeed, if one refers to physics, this equation would be the equivalent of trying to find the position of a car while being only aware of its speed. Although there is a well-known relation between speed and position (the speed is the derivative of the position!), one cannot solve the problem without knowing at least at one moment where the car is! Most of the time, this information is known at the "beginning" of the problem i.e. stem:[t=0].
+
+These equations are often refered to as IVP ODES : Initial Value Problem. Thus, in order to solve the problem, initial value needs to be part of the equation :
+
+[stem] 
+++++ 
+Y'(t) = t^2 \quad Y(t=0)=Y_0
+++++
+
+Here, a new information is added : Function stem:[Y(t)] has, at time stem:[t=0], a value of stem:[Y_0]. Most of the time, a simplified notation if employed, where stem:[t_0]= straightforday referes to stem:[t(0)].
+
+== Exercices
+
+To get back in the mood with ODES, let's solve a few problems using classical integral and derivative techniques
+
+=== Problem 1
+
+Solve this differentail equation
+
+[stem] 
+++++ 
+Y'(t) = \lambda Y(t) + 1 \quad Y(0)=1
+++++
+
+=== Problem 2
+
+Show that the function
+
+[stem] 
+++++ 
+Y(t) = \sin t + C e^{-t}
+++++
+
+is a solution to ODE
+
+[stem] 
+++++ 
+Y'(t) = -Y(t) + \sin t + cos t \quad Y(0)=1
+++++
+
+Find the value of stem:[C] in order to satisfy the inital value.
